@@ -61,7 +61,7 @@ export default {
       <!-- <h1 is="sui-header">Pesquise</h1> -->
     </div>
     <div>
-      <h3>Notícias da atualidade</h3>
+      <h3>My News</h3>
       <!-- TODO: Create component to search bar  -->
       <div style=" display: flex; ">
         <input style="flex: 1; padding: 1em;" v-model="searchQuery" placeholder="What are you looking for?" />
@@ -72,7 +72,7 @@ export default {
       </div>
       <!-- TODO: Create component to manipulate filters -->
       <div class="header-filters">
-        Fonte:
+        <strong>Source:</strong>
         <div style="margin: 0.5em" v-for="source in filters.sources">
           <input :id="source" :value="source" name="source" type="checkbox" v-model="checkedSources" />
           <label :for="source">{{ source }}</label>
