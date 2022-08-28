@@ -1,53 +1,46 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+<script>
+import NewsList from "./components/NewsList.vue";
+export default {
+  data() {
+    return {
+      newsSelected: null
+    }
+  },
+  methods: {
+    handleNewsSelected: function (item) {
+      console.log("app", { item })
+      this.newsSelected = item
+      console.log(this)
+    }
+  },
+  components: { NewsList }
+}
+
 </script>
 
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div>
+      <h1 is="sui-header">Pesquise</h1>
+      <!-- TODO: Add form to search news -->
     </div>
   </header>
 
   <main>
-    <TheWelcome />
+    <div class="news-content">
+      <NewsList style="flex:1" @onNewsSelected="handleNewsSelected" />
+      <!-- TODO: Create component to display selected news -->
+      <div v-if="newsSelected" style="background: #ccc; flex: 1">
+        noticia selecionada
+        {{ newsSelected }}
+      </div>
+    </div>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
+.news-content {
+  display: flex;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>
