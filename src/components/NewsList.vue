@@ -11,18 +11,8 @@ export default {
             this.$emit('onNewsSelected', item);
         }
     },
-    mounted() {
-        console.log("mount");
-        fetch("https://newsapi.org/v2/everything?" + new URLSearchParams({
-            q: "bitcoin",
-            apiKey: import.meta.env.VITE_NEWS_API_KEY
-        }))
-            .then((response) => {
-                response.json().then(data => {
-                    console.log({ data });
-                    this.items = data.articles;
-                });
-            });
+    props: {
+        items: [Object],
     },
     components: { NewsItem }
 }

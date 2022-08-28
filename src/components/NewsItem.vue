@@ -20,7 +20,7 @@ export default {
 </script>
 <template>
     <div class="news-item" @click="itemSelected">
-        {{ item.title }}
+        {{ item.source.name }}: {{ item.title }}
     </div>
 
 </template>
