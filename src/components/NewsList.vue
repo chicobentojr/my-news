@@ -3,6 +3,7 @@ import NewsItem from "./NewsItem.vue";
 export default {
   methods: {
     handleItemSelected: function (item) {
+      console.log("on item");
       this.$emit("onNewsSelected", item);
     },
   },

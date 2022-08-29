@@ -12,6 +12,7 @@ export default {
       favoriteNews,
     };
   },
+
   methods: {
     closeModal: function () {
       console.log("fecha");
@@ -30,31 +31,28 @@ export default {
     <div v-if="visible" class="modal-mask" @click="closeModal">
       <div class="modal-wrapper">
         <div class="modal-container">
+          <button @click.stop="favoriteNews">Favorite</button>
+          <a :href="item.url" target="_blank">Open source</a>
           <div class="modal-header">
             <img class="news-header-img" :src="item.urlToImage" />
             <h3>{{ item.title }}</h3>
           </div>
           <!-- TODO: Add a close button -->
           <!-- <span class="btn-close">&times;</span> -->
-          <div class="modal-content">
+          <div class="modal-body">
             <p>
               By: <strong>{{ item.author }}</strong> at
               {{ item.publishedAt }}
             </p>
 
-            <a :href="item.url" target="_blank">Open news</a>
-
             <!-- <p>{{ item.description }}</p> -->
 
             <!-- <p>{{ item.content }}</p> -->
             <!-- TODO: Add iframe to display entire report??? -->
+            <PageRenderer :item="item" />
           </div>
 
-          <button @click.stop="favoriteNews">Favorite</button>
           <div class="modal-footer"></div>
-          <div>
-            <PageRenderer :url="item.url" />
-          </div>
         </div>
       </div>
     </div>
@@ -94,11 +92,14 @@ export default {
 
 .modal-header h3 {
   margin: 1em 0;
-  color: #42b983;
+  /* color: #42b983; */
+  color: #008080;
 }
 
 .modal-body {
   margin: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-default-button {

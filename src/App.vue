@@ -11,10 +11,10 @@ const count = computed(function () {
 <template>
   <!-- TODO: Create app header component -->
   <header>
-    <RouterLink to="/"><h3>My News</h3></RouterLink> |
-    <RouterLink to="/favorites"
-      ><h3>Favorites {{ count ? `(${count})` : null }}</h3></RouterLink
-    >
+    <RouterLink to="/" class="header-link"> <h3>My News</h3></RouterLink> |
+    <RouterLink to="/favorites" class="header-link">
+      <h3>Favorites {{ count ? `(${count})` : null }}</h3>
+    </RouterLink>
   </header>
 
   <main>
@@ -24,15 +24,16 @@ const count = computed(function () {
 
 <!-- TODO: Refactor entire style page -->
 <style>
-* {
-  font-size: 1.02em;
+html {
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 header {
   margin: 1em auto;
   max-width: 1260px;
 }
-header > a {
+.header-link {
   display: inline-block;
+  color: #008080;
 }
 
 main {

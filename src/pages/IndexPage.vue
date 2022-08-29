@@ -40,7 +40,7 @@ export default {
               q: this.searchQuery,
               apiKey: import.meta.env.VITE_NEWS_API_KEY,
               page: this.currentPage,
-              pageSize: 15,
+              pageSize: 10,
             })
         ).then((response) => {
           response.json().then((data) => {
