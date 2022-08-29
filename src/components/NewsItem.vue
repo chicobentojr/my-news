@@ -1,5 +1,18 @@
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 export default {
+  setup(props) {
+    const store = useStore();
+    const isFavorite = computed(function () {
+      return Boolean(
+        store.state.favoriteNews.find((n) => n.url == props.item.url)
+      );
+    });
+
+    return { isFavorite };
+  },
   data(props) {
     const queryTerms = props.query.split(" ");
     const headline = queryTerms.reduce((acc, q) => {
@@ -29,7 +42,11 @@ export default {
 };
 </script>
 <template>
-  <div class="news-item" @click="itemSelected">
+  <div
+    class="news-item"
+    :class="{ favorited: isFavorite }"
+    @click="itemSelected"
+  >
     <!-- {{ item.source.name }}: {{ item.title }} -->
     <div class="title">
       {{ item.source.name }}: <span v-html="headline"></span>
@@ -55,6 +72,9 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
+}
+.news-item.favorited {
+  border-color: #008080;
 }
 .news-item:hover {
   /* background-color: #00808050; */

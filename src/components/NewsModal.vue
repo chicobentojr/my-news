@@ -1,15 +1,27 @@
 <script>
+import { computed } from "vue";
 import { useStore } from "vuex";
 import PageRenderer from "./PageRenderer.vue";
 export default {
   setup(props) {
     const store = useStore();
+
+    const isFavorite = computed(function () {
+      return Boolean(
+        store.state.favoriteNews.find((n) => n.url == props.item.url)
+      );
+    });
+
     const favoriteNews = function () {
-      console.log("favoritar", props.item);
-      store.commit("addFavoriteNews", props.item);
+      if (this.isFavorite) {
+        store.commit("removeFavoriteNews", props.item);
+      } else {
+        store.commit("addFavoriteNews", props.item);
+      }
     };
     return {
       favoriteNews,
+      isFavorite,
     };
   },
 
@@ -41,12 +53,13 @@ export default {
               </span>
             </div>
             <div class="modal-actions">
-              <span
+              <button
                 class="modal-header favorite-btn"
+                :class="{ favorited: isFavorite }"
                 @click.stop="favoriteNews"
               >
-                Favorite
-              </span>
+                {{ isFavorite ? "Favorited" : "Favorite" }}
+              </button>
               <a
                 class="modal-header news-source-link"
                 :href="item.url"
@@ -115,12 +128,16 @@ export default {
   float: right;
   align-self: flex-end;
   margin: 0 0.5em;
-  background-color: #008080;
+  background-color: #ccc;
   color: white;
   border: none;
   padding: 0.5em 1em;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.modal-header .favorite-btn.favorited {
+  background-color: #008080;
 }
 
 .modal-header .news-source-link {

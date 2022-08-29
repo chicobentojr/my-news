@@ -22,7 +22,9 @@ const store = createStore({
     addFavoriteNews(state, item) {
       state.favoriteNews.push(item);
     },
-
+    removeFavoriteNews(state, item) {
+      state.favoriteNews = state.favoriteNews.filter((n) => n.url !== item.url);
+    },
     addNewsToCache(state, { key, content }) {
       state.cachedNews = {
         ...state.cachedNews,
