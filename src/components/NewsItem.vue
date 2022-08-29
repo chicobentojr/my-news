@@ -14,7 +14,7 @@ export default {
     return { isFavorite };
   },
   data(props) {
-    const queryTerms = props.query.split(" ");
+    const queryTerms = props.query?.split(" ") || [];
     const headline = queryTerms.reduce((acc, q) => {
       return acc.replace(new RegExp(q, "gi"), `<strong>${q}</strong>`);
     }, props.item.title);
