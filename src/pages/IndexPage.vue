@@ -40,6 +40,7 @@ export default {
               q: this.searchQuery,
               apiKey: import.meta.env.VITE_NEWS_API_KEY,
               page: this.currentPage,
+              pageSize: 15,
             })
         ).then((response) => {
           response.json().then((data) => {
@@ -134,6 +135,7 @@ export default {
         style="flex: 1"
         @onNewsSelected="handleNewsSelected"
         :items="filteredNews"
+        :query="searchQuery"
       />
     </div>
   </div>

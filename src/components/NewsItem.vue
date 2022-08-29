@@ -1,8 +1,13 @@
 <script>
 export default {
-  data() {
+  data(props) {
+    const queryTerms = props.query.split(" ");
+    const headline = queryTerms.reduce((acc, q) => {
+      return acc.replace(new RegExp(q, "gi"), `<strong>${q}</strong>`);
+    }, props.item.title);
+
     return {
-      // items: []
+      headline,
     };
   },
   mounted() {},
@@ -14,12 +19,14 @@ export default {
   props: {
     // TODO: Define item structure
     item: Object,
+    query: String,
   },
 };
 </script>
 <template>
   <div class="news-item" @click="itemSelected">
-    {{ item.source.name }}: {{ item.title }}
+    <!-- {{ item.source.name }}: {{ item.title }} -->
+    {{ item.source.name }}: <span v-html="headline"></span>
   </div>
 </template>
 
