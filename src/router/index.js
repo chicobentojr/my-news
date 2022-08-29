@@ -6,18 +6,8 @@ import IndexPage from "../pages/IndexPage.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: "/favorites",
-      name: "favorites",
-      component: FavoritesPage,
-      // component: () => import("../pages/FavoritesPage.vue"),
-    },
-    {
-      path: "/",
-      name: "home",
-      // component: IndexPage,
-      component: IndexPage,
-    },
+    { path: "/", name: "home", component: IndexPage },
+    { path: "/favorites", name: "favorites", component: FavoritesPage },
   ],
 });
 

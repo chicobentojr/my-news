@@ -134,10 +134,6 @@ export default {
 </template>
 
 <style scoped>
-* {
-  font-size: 1.05em;
-}
-
 .page-header {
   /* max-width: 1260px; */
 }
