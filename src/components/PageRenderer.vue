@@ -17,6 +17,6 @@ export default {
 };
 </script>
 <template>
-    <!-- <div>Loading ...</div> -->
+    <div>Loading ...</div>
     <!-- <iframe :src="url"></iframe> -->
 </template>

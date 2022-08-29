@@ -23,6 +23,7 @@ export default {
             <div class="modal-wrapper">
                 <div class="modal-container">
                     <div class="modal-header">
+                        <img class="news-header-img" :src="item.urlToImage" />
                         <h3>{{ item.title }}</h3>
                     </div>
                     <!-- TODO: Add a close button -->
@@ -78,7 +79,7 @@ export default {
 }
 
 .modal-header h3 {
-    margin-top: 0;
+    margin: 1em 0;
     color: #42b983;
 }
 
@@ -88,6 +89,12 @@ export default {
 
 .modal-default-button {
     float: right;
+}
+
+.news-header-img {
+    text-align: center;
+    max-width: 900px;
+    margin: 0.5em auto;
 }
 
 /*

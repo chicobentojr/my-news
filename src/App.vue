@@ -1,9 +1,8 @@
 <script>
 import NewsList from "./components/NewsList.vue";
-import PageRenderer from "./components/PageRenderer.vue";
 import NewsModal from "./components/NewsModal.vue";
 export default {
-  components: { NewsList, PageRenderer, NewsModal },
+  components: { NewsList, NewsModal },
   data() {
     return {
       newsSelected: null,
@@ -17,8 +16,7 @@ export default {
     };
   },
   watch: {
-    checkedSources(newValues, oldValues) {
-      console.log({ newValues, oldValues });
+    checkedSources(newValues) {
       this.filteredNews = this.allNews.filter(
         (a) => newValues.length == 0 || newValues.includes(a.source.name)
       );
@@ -35,6 +33,7 @@ export default {
     fetchNews: function () {
       if (this.searchQuery) {
         console.log("fetching ....", this.searchQuery);
+
         fetch(
           "https://newsapi.org/v2/everything?" +
           new URLSearchParams({
@@ -50,6 +49,7 @@ export default {
             const sources = new Set(data.articles.map((a) => a.source.name));
 
             this.filters.sources = sources;
+            this.checkedSources = []
           });
         });
       }
@@ -66,10 +66,6 @@ export default {
   <!-- TODO: Create NewsContainer component to group children components -->
   <header>
     <div>
-      <!-- TODO: Add form to search news -->
-      <!-- <h1 is="sui-header">Pesquise</h1> -->
-    </div>
-    <div>
       <h3>My News</h3>
       <!-- TODO: Create component to search bar  -->
       <div style="display: flex">
@@ -80,9 +76,10 @@ export default {
       <!-- TODO: Create component to manipulate filters -->
       <div class="header-filters">
         <strong>Source:</strong>
-        <div style="margin: 0.5em" v-for="source in filters.sources" :key="source">
-          <input :id="source" :value="source" name="source" type="checkbox" v-model="checkedSources" />
-          <label :for="source">{{ source }}</label>
+        <div class="filter" style="margin: 0.5em" v-for="source in filters.sources" :key="source">
+          <input class="filter-checkbox" :id="source" :value="source" name="source" type="checkbox"
+            v-model="checkedSources" />
+          <label class="filter-label" :for="source">{{ source }}</label>
         </div>
       </div>
     </div>
@@ -127,8 +124,23 @@ header {
 }
 
 .header-filters {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.header-filters .filter {
+  /* display: flex; */
+  /* align-items: center; */
+  display: inline-block;
+  cursor: pointer;
+}
+
+.header-filters .filter .filter-checkbox {
+  margin: 0 5px;
+}
+
+.header-filters .filter .filter-label {
+  cursor: pointer;
 }
 
 main {
