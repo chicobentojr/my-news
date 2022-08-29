@@ -2,8 +2,9 @@
 import NewsList from "../components/NewsList.vue";
 import NewsModal from "../components/NewsModal.vue";
 import { RouterLink } from "vue-router";
+import Pagination from "../components/Pagination.vue";
 export default {
-  components: { NewsList, NewsModal, RouterLink },
+  components: { NewsList, NewsModal, RouterLink, Pagination },
   data() {
     return {
       newsSelected: null,
@@ -14,6 +15,8 @@ export default {
       },
       checkedSources: [],
       searchQuery: "bitcoin",
+      currentPage: 1,
+      totalPages: 1,
     };
   },
   watch: {
@@ -24,13 +27,6 @@ export default {
     },
   },
   methods: {
-    handleModalClose: function () {
-      this.newsSelected = null;
-    },
-    handleNewsSelected: function (item) {
-      // console.log("app", { ...item });
-      this.newsSelected = item;
-    },
     fetchNews: function () {
       if (this.searchQuery) {
         // console.log("fetching ....", this.searchQuery);
@@ -40,10 +36,11 @@ export default {
             new URLSearchParams({
               q: this.searchQuery,
               apiKey: import.meta.env.VITE_NEWS_API_KEY,
+              page: this.currentPage,
             })
         ).then((response) => {
           response.json().then((data) => {
-            // console.log({ data });
+            console.log({ data });
             this.allNews = data.articles;
             this.filteredNews = this.allNews;
 
@@ -51,9 +48,22 @@ export default {
 
             this.filters.sources = sources;
             this.checkedSources = [];
+            this.totalPages = Math.ceil(data.totalResults / 100);
           });
         });
       }
+    },
+    handleModalClose: function () {
+      this.newsSelected = null;
+    },
+    handleNewsSelected: function (item) {
+      // console.log("app", { ...item });
+      this.newsSelected = item;
+    },
+    handlePageChange: function (newPage) {
+      console.log({ newPage });
+      this.currentPage = newPage;
+      this.fetchNews();
     },
   },
   mounted() {
@@ -104,6 +114,11 @@ export default {
       :visible="newsSelected != null"
       :item="newsSelected"
       @onClose="handleModalClose"
+    />
+    <Pagination
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @onPageChange="handlePageChange"
     />
     <div>
       <NewsList
@@ -160,6 +175,7 @@ export default {
 
 .news-content {
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: 1024px;
 }

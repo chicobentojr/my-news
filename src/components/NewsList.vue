@@ -14,7 +14,7 @@ export default {
 </script>
 <template>
   <div>
-    <div v-for="item in items" :key="item.title">
+    <div v-for="item in items" :key="item.title + item.publishedAt">
       <NewsItem :item="item" @onItemSelected="handleItemSelected" />
     </div>
   </div>
