@@ -78,7 +78,11 @@ export default {
       <!-- TODO: Create component to manipulate filters -->
       <div class="header-filters">
         <strong>Source:</strong>
-        <div style="margin: 0.5em" v-for="source in filters.sources">
+        <div
+          style="margin: 0.5em"
+          v-for="source in filters.sources"
+          :key="source"
+        >
           <input
             :id="source"
             :value="source"
