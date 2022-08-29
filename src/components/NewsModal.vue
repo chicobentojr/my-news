@@ -44,9 +44,9 @@ export default {
 
             <a :href="item.url" target="_blank">Open news</a>
 
-            <p>{{ item.description }}</p>
+            <!-- <p>{{ item.description }}</p> -->
 
-            <p>{{ item.content }}</p>
+            <!-- <p>{{ item.content }}</p> -->
             <!-- TODO: Add iframe to display entire report??? -->
           </div>
 

@@ -3,8 +3,9 @@ import NewsList from "../components/NewsList.vue";
 import NewsModal from "../components/NewsModal.vue";
 import { RouterLink } from "vue-router";
 import Pagination from "../components/Pagination.vue";
+import Loader from "../components/Loader.vue";
 export default {
-  components: { NewsList, NewsModal, RouterLink, Pagination },
+  components: { NewsList, NewsModal, RouterLink, Pagination, Loader },
   data() {
     return {
       newsSelected: null,
@@ -17,6 +18,7 @@ export default {
       searchQuery: "bitcoin",
       currentPage: 1,
       totalPages: 1,
+      loadingNews: true,
     };
   },
   watch: {
@@ -29,8 +31,7 @@ export default {
   methods: {
     fetchNews: function () {
       if (this.searchQuery) {
-        // console.log("fetching ....", this.searchQuery);
-
+        this.loadingNews = true;
         fetch(
           "https://newsapi.org/v2/everything?" +
             new URLSearchParams({
@@ -49,6 +50,7 @@ export default {
             this.filters.sources = sources;
             this.checkedSources = [];
             this.totalPages = Math.ceil(data.totalResults / 100);
+            this.loadingNews = false;
           });
         });
       }
@@ -109,7 +111,8 @@ export default {
     </div>
   </div>
 
-  <div class="news-content">
+  <Loader v-if="loadingNews" />
+  <div v-else class="news-content">
     <NewsModal
       :visible="newsSelected != null"
       :item="newsSelected"
@@ -126,24 +129,6 @@ export default {
         @onNewsSelected="handleNewsSelected"
         :items="filteredNews"
       />
-
-      <!-- TODO: Create component to display selected news -->
-      <!-- <div v-if="newsSelected" style="flex: 1">
-          <div style="background: #ccc; margin: 1em">
-            <img class="news-header-img" :src="newsSelected.urlToImage" />
-            <h3>{{ newsSelected.title }}</h3>
-            <p>
-              By: <strong>{{ newsSelected.author }}</strong> at
-              {{ newsSelected.publishedAt }}
-            </p>
-  
-            <p>{{ newsSelected.description }}</p>
-  
-            <p>{{ newsSelected.content }}</p>
-  
-            <PageRenderer :url="newsSelected.url" />
-          </div>
-        </div> -->
     </div>
   </div>
 </template>
