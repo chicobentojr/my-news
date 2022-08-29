@@ -4,6 +4,7 @@ import NewsModal from "../components/NewsModal.vue";
 import { RouterLink } from "vue-router";
 import Pagination from "../components/Pagination.vue";
 import Loader from "../components/Loader.vue";
+import { debounce } from "lodash";
 export default {
   components: { NewsList, NewsModal, RouterLink, Pagination, Loader },
   data() {
@@ -15,6 +16,7 @@ export default {
         sources: [],
       },
       checkedSources: [],
+      // searchQuery: "Brazil",
       searchQuery: "bitcoin",
       currentPage: 1,
       totalPages: 1,
@@ -41,7 +43,7 @@ export default {
             })
         ).then((response) => {
           response.json().then((data) => {
-            console.log({ data });
+            console.log(this.searchQuery, { data });
             this.allNews = data.articles;
             this.filteredNews = this.allNews;
 
@@ -55,6 +57,9 @@ export default {
         });
       }
     },
+    handleQueryChange: debounce(function () {
+      this.fetchNews();
+    }, 500),
     handleModalClose: function () {
       this.newsSelected = null;
     },
@@ -85,6 +90,7 @@ export default {
         style="flex: 1; padding: 1em"
         v-model="searchQuery"
         placeholder="What are you looking for?"
+        @input="handleQueryChange"
       />
       <button @click="fetchNews">Search</button>
     </div>
