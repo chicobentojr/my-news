@@ -7,6 +7,7 @@ const store = createStore({
     // products: [],
     // cart: [],
     favoriteNews: [],
+    cachedNews: {},
   },
   mutations: {
     initialiseStore(state) {
@@ -20,6 +21,13 @@ const store = createStore({
     },
     addFavoriteNews(state, item) {
       state.favoriteNews.push(item);
+    },
+
+    addNewsToCache(state, { key, content }) {
+      state.cachedNews = {
+        ...state.cachedNews,
+        [key]: content,
+      };
     },
     // addCartItem(state, item) {
     //   item.quantity = 1;
@@ -42,10 +50,10 @@ const store = createStore({
   },
 });
 
-// Save entire store in localStorage to persist after reload page
-store.subscribe((mutation, state) => {
-  // Store the state object as a JSON string
-  localStorage.setItem("store", JSON.stringify(state));
-});
+// TODO: Save entire store in localStorage to persist after reload page
+// store.subscribe((mutation, state) => {
+//   // Store the state object as a JSON string
+//   localStorage.setItem("store", JSON.stringify(state));
+// });
 
 export default store;

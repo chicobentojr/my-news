@@ -28,12 +28,12 @@ export default {
       this.newsSelected = null;
     },
     handleNewsSelected: function (item) {
-      console.log("app", { ...item });
+      // console.log("app", { ...item });
       this.newsSelected = item;
     },
     fetchNews: function () {
       if (this.searchQuery) {
-        console.log("fetching ....", this.searchQuery);
+        // console.log("fetching ....", this.searchQuery);
 
         fetch(
           "https://newsapi.org/v2/everything?" +
@@ -43,7 +43,7 @@ export default {
             })
         ).then((response) => {
           response.json().then((data) => {
-            console.log({ data });
+            // console.log({ data });
             this.allNews = data.articles;
             this.filteredNews = this.allNews;
 
@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     // TODO: Set API host as Env variable
-    console.log(this.$router.params);
+    // console.log(this.$router.params);
     this.fetchNews();
   },
 };
