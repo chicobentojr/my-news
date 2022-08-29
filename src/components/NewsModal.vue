@@ -1,15 +1,13 @@
 <script>
 import { useStore } from "vuex";
+import PageRenderer from "./PageRenderer.vue";
 export default {
   setup(props) {
     const store = useStore();
-
     const favoriteNews = function () {
       console.log("favoritar", props.item);
-
       store.commit("addFavoriteNews", props.item);
     };
-
     return {
       favoriteNews,
     };
@@ -24,6 +22,7 @@ export default {
     visible: Boolean,
     item: Object,
   },
+  components: { PageRenderer },
 };
 </script>
 <template>
@@ -43,6 +42,8 @@ export default {
               {{ item.publishedAt }}
             </p>
 
+            <a :href="item.url" target="_blank">Open news</a>
+
             <p>{{ item.description }}</p>
 
             <p>{{ item.content }}</p>
@@ -51,6 +52,9 @@ export default {
 
           <button @click.stop="favoriteNews">Favorite</button>
           <div class="modal-footer"></div>
+          <div>
+            <PageRenderer :url="item.url" />
+          </div>
         </div>
       </div>
     </div>
@@ -84,6 +88,8 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.1s ease;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
 }
 
 .modal-header h3 {
