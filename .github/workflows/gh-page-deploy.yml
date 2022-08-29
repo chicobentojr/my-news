@@ -1,47 +1,25 @@
-name: Deploy GH pages
+name: Build and Deploy
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: write
 jobs:
-  # This workflow contains a single job called "build"
-  deploy-gh-page:
-    # The type of runner that the job will run on
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - uses: fregante/setup-git-user@v1
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
-      # Setup Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-
-      - name: Install npm packages
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy project in gh-pages branch
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
-          cd dist
+          npm ci
+          npm run build
 
-          git init
-          git checkout -b main
-          git add -A
-          git commit -m 'deploy'
-
-          # if you are deploying to https://<USERNAME>.github.io/<REPO>
-          git push -f git@github.com:chicobentojr/my-news.git main:gh-pages
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # The folder the action should deploy.
