@@ -35,13 +35,14 @@ export default {
       if (this.searchQuery) {
         this.loadingNews = true;
         fetch(
-          "https://newsapi.org/v2/everything?" +
-            new URLSearchParams({
-              q: this.searchQuery,
-              apiKey: import.meta.env.VITE_NEWS_API_KEY,
-              page: this.currentPage,
-              pageSize: 10,
-            })
+          // "https://newsapi.org/v2/everything?" +
+          //   new URLSearchParams({
+          //     q: this.searchQuery,
+          //     apiKey: import.meta.env.VITE_NEWS_API_KEY,
+          //     page: this.currentPage,
+          //     pageSize: 10,
+          //   })
+          "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
         ).then((response) => {
           response.json().then((data) => {
             console.log(this.searchQuery, { data });

@@ -31,24 +31,34 @@ export default {
     <div v-if="visible" class="modal-mask" @click="closeModal">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <button @click.stop="favoriteNews">Favorite</button>
-          <a :href="item.url" target="_blank">Open source</a>
           <div class="modal-header">
-            <img class="news-header-img" :src="item.urlToImage" />
-            <h3>{{ item.title }}</h3>
+            <div>
+              <h3 class="modal-header title">{{ item.title }}</h3>
+              <span>
+                By: <strong>{{ item.author || "Anonymous" }}</strong> at
+                <!-- TODO: Format time -->
+                {{ item.publishedAt }}
+              </span>
+            </div>
+            <div class="modal-actions">
+              <span
+                class="modal-header favorite-btn"
+                @click.stop="favoriteNews"
+              >
+                Favorite
+              </span>
+              <a
+                class="modal-header news-source-link"
+                :href="item.url"
+                target="_blank"
+                >Open source ↗</a
+              >
+            </div>
           </div>
           <!-- TODO: Add a close button -->
           <!-- <span class="btn-close">&times;</span> -->
           <div class="modal-body">
-            <p>
-              By: <strong>{{ item.author }}</strong> at
-              {{ item.publishedAt }}
-            </p>
-
-            <!-- <p>{{ item.description }}</p> -->
-
-            <!-- <p>{{ item.content }}</p> -->
-            <!-- TODO: Add iframe to display entire report??? -->
+            <img class="modal-header-img" :src="item.urlToImage" />
             <PageRenderer :item="item" />
           </div>
 
@@ -90,10 +100,47 @@ export default {
   overflow-y: auto;
 }
 
-.modal-header h3 {
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-header .modal-actions {
+  align-self: center;
+}
+
+.modal-header .favorite-btn {
+  color: #008080;
+  float: right;
+  align-self: flex-end;
+  margin: 0 0.5em;
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-header .news-source-link {
+  color: #008080;
+  float: right;
+  align-self: flex-end;
+  padding: 0.5em 1em;
+}
+.modal-header .title {
   margin: 1em 0;
   /* color: #42b983; */
   color: #008080;
+}
+
+.modal-header-img {
+  text-align: center;
+  /* max-width: 900px;
+  max-width: -webkit-fill-available; */
+  width: 100%;
+  margin: 1em auto;
 }
 
 .modal-body {
@@ -104,12 +151,6 @@ export default {
 
 .modal-default-button {
   float: right;
-}
-
-.news-header-img {
-  text-align: center;
-  max-width: 900px;
-  margin: 0.5em auto;
 }
 
 /*
