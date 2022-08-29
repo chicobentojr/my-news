@@ -8,50 +8,53 @@ export default {
       allNews: [],
       filteredNews: [],
       filters: {
-        sources: []
+        sources: [],
       },
       checkedSources: [],
-      searchQuery: "bitcoin"
-    }
+      searchQuery: "bitcoin",
+    };
   },
   watch: {
     checkedSources(newValues, oldValues) {
-      console.log({ newValues, oldValues })
-      this.filteredNews = this.allNews.filter(a => newValues.length == 0 || newValues.includes(a.source.name))
-    }
+      console.log({ newValues, oldValues });
+      this.filteredNews = this.allNews.filter(
+        (a) => newValues.length == 0 || newValues.includes(a.source.name)
+      );
+    },
   },
   methods: {
     handleNewsSelected: function (item) {
-      console.log("app", { ...item })
-      this.newsSelected = item
+      console.log("app", { ...item });
+      this.newsSelected = item;
     },
     fetchNews: function () {
       if (this.searchQuery) {
-        console.log("fetching ....", this.searchQuery)
-        fetch("https://newsapi.org/v2/everything?" + new URLSearchParams({
-          q: this.searchQuery,
-          apiKey: import.meta.env.VITE_NEWS_API_KEY
-        }))
-          .then((response) => {
-            response.json().then(data => {
-              console.log({ data });
-              this.allNews = data.articles;
-              this.filteredNews = this.allNews;
+        console.log("fetching ....", this.searchQuery);
+        fetch(
+          "https://newsapi.org/v2/everything?" +
+            new URLSearchParams({
+              q: this.searchQuery,
+              apiKey: import.meta.env.VITE_NEWS_API_KEY,
+            })
+        ).then((response) => {
+          response.json().then((data) => {
+            console.log({ data });
+            this.allNews = data.articles;
+            this.filteredNews = this.allNews;
 
-              const sources = new Set(data.articles.map(a => a.source.name))
+            const sources = new Set(data.articles.map((a) => a.source.name));
 
-              this.filters.sources = sources
-            });
+            this.filters.sources = sources;
           });
+        });
       }
-    }
+    },
   },
   mounted() {
     // TODO: Set API host as Env variable
-    this.fetchNews()
+    this.fetchNews();
   },
-}
-
+};
 </script>
 
 <template>
@@ -63,18 +66,30 @@ export default {
     <div>
       <h3>My News</h3>
       <!-- TODO: Create component to search bar  -->
-      <div style=" display: flex; ">
-        <input style="flex: 1; padding: 1em;" v-model="searchQuery" placeholder="What are you looking for?" />
+      <div style="display: flex">
+        <input
+          style="flex: 1; padding: 1em"
+          v-model="searchQuery"
+          placeholder="What are you looking for?"
+        />
         <button @click="fetchNews">Search</button>
       </div>
-      <div>
-
-      </div>
+      <div></div>
       <!-- TODO: Create component to manipulate filters -->
       <div class="header-filters">
         <strong>Source:</strong>
-        <div style="margin: 0.5em" v-for="source in filters.sources">
-          <input :id="source" :value="source" name="source" type="checkbox" v-model="checkedSources" />
+        <div
+          style="margin: 0.5em"
+          v-for="source in filters.sources"
+          :key="source"
+        >
+          <input
+            :id="source"
+            :value="source"
+            name="source"
+            type="checkbox"
+            v-model="checkedSources"
+          />
           <label :for="source">{{ source }}</label>
         </div>
       </div>
@@ -83,25 +98,28 @@ export default {
 
   <main>
     <div class="news-content">
-      <NewsList style="flex:1" @onNewsSelected="handleNewsSelected" :items="filteredNews" />
-
+      <NewsList
+        style="flex: 1"
+        @onNewsSelected="handleNewsSelected"
+        :items="filteredNews"
+      />
 
       <!-- TODO: Create component to display selected news -->
       <div v-if="newsSelected" style="flex: 1">
         <div style="background: #ccc; margin: 1em">
-
           <!-- <h3>
             Selected News:
           </h3> -->
           <img class="news-header-img" :src="newsSelected.urlToImage" />
-          <h3> {{ newsSelected.title }}</h3>
-          <p>By: <strong>{{ newsSelected.author }}</strong> at {{ newsSelected.publishedAt }}</p>
+          <h3>{{ newsSelected.title }}</h3>
+          <p>
+            By: <strong>{{ newsSelected.author }}</strong> at
+            {{ newsSelected.publishedAt }}
+          </p>
 
           <p>{{ newsSelected.description }}</p>
 
           <p>{{ newsSelected.content }}</p>
-
-
         </div>
       </div>
     </div>
@@ -115,7 +133,6 @@ header {
 
 .news-content {
   display: flex;
-
 }
 
 .news-header-img {
