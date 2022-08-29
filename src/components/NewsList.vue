@@ -23,5 +23,6 @@ export default {
         @onItemSelected="handleItemSelected"
       />
     </div>
+    <!-- TODO: Add message to empty results -->
   </div>
 </template>

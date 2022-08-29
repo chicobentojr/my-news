@@ -79,4 +79,12 @@ export default {
   display: inline-block;
   cursor: pointer;
 }
+
+.header-filters .filter .filter-checkbox {
+  margin: 0 5px;
+}
+
+.header-filters .filter .filter-label {
+  cursor: pointer;
+}
 </style>

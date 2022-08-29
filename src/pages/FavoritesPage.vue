@@ -27,9 +27,6 @@ export default {
     return {
       newsSelected: null,
       filteredNews: this.items,
-      // filters: {
-      //   sources: [],
-      // },
       checkedSources: [],
     };
   },

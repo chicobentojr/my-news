@@ -87,14 +87,15 @@ export default {
   <!-- TODO: Create NewsContainer component to group children components -->
   <div class="page-header">
     <!-- TODO: Create component to search bar  -->
-    <div style="display: flex">
+    <div class="search-bar" style="display: flex">
       <input
+        class="search-bar input"
         style="flex: 1; padding: 1em"
         v-model="searchQuery"
         placeholder="What are you looking for?"
         @input="handleQueryChange"
       />
-      <button @click="fetchNews">Search</button>
+      <button class="search-bar btn-search" @click="fetchNews">Search</button>
     </div>
     <div></div>
     <!-- TODO: Create component to manipulate filters -->
@@ -143,15 +144,6 @@ export default {
 </template>
 
 <style scoped>
-.page-header {
-  /* max-width: 1260px; */
-}
-
-.header-filters {
-  /* display: flex; */
-  /* align-items: center; */
-}
-
 .header-filters .filter {
   /* display: flex; */
   /* align-items: center; */
@@ -165,6 +157,33 @@ export default {
 
 .header-filters .filter .filter-label {
   cursor: pointer;
+}
+
+.search-bar .input {
+  font-size: large;
+  color: #008080;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 10px 0 0 10px;
+}
+.search-bar .input:focus {
+  outline: none;
+  border: 1px solid #008080;
+}
+
+.search-bar .btn-search {
+  font-size: large;
+  outline: none;
+  border: none;
+  color: white;
+  background-color: #008080;
+  padding: 0 1em;
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.search-bar .btn-search:hover {
+  opacity: 1;
 }
 
 .news-content {

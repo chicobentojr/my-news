@@ -53,9 +53,9 @@ const store = createStore({
 });
 
 // TODO: Save entire store in localStorage to persist after reload page
-store.subscribe((mutation, state) => {
-  // Store the state object as a JSON string
-  localStorage.setItem("store", JSON.stringify(state));
-});
+// store.subscribe((mutation, state) => {
+//   // Store the state object as a JSON string
+//   localStorage.setItem("store", JSON.stringify(state));
+// });
 
 export default store;
