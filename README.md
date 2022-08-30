@@ -7,6 +7,11 @@
 
 This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-start.html#with-build-tools) Quick Start template.
 
+## Live Demo
+
+- Install [CORS Unblock](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino) to fetch the news.
+- Open [demo here](https://chicobento.dev/my-news/)
+
 
 ## News API Setup
 

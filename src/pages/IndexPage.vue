@@ -122,7 +122,7 @@ export default {
     <InfoMessage
       v-if="isDemoApi"
       message="This interface is not using original News API due free plan limitations. So all results are the same. 
-      Open https://github.com/chicobentojr/my-news to run project locally."
+      Open https://github.com/chicobentojr/my-news to run project locally. Install CORS Unblock browser extension to fetch news from external source"
       type="warning"
     />
     <SearchBar @onQuerySearch="handleQuerySearch" />
