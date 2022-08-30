@@ -66,12 +66,14 @@ export default {
 
 .page-item {
   margin: 0 0.5em;
-  cursor: pointer;
 
-  background: #eee;
+  background: #008080;
   padding: 0.5em;
   border-radius: 5px;
   user-select: none;
+  border: none;
+  color: white;
+  opacity: 0.8;
 }
 .page-item.disabled {
   opacity: 0.5;
@@ -79,8 +81,10 @@ export default {
 }
 .page-item .previous {
   float: left;
+  cursor: pointer;
 }
 .page-item .next {
   float: right;
+  cursor: pointer;
 }
 </style>

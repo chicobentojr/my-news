@@ -52,6 +52,7 @@ export default {
 <template>
   <!-- <div>Favorite News</div> -->
   <NewsFilter
+    v-if="filteredNews.length > 0"
     label="Source"
     :filters="filters"
     @onFiltersChange="handleFilterChange"

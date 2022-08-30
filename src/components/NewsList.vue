@@ -15,7 +15,7 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div v-if="items.length > 0">
     <div v-for="item in items" :key="item.title + item.publishedAt">
       <NewsItem
         :item="item"
@@ -25,4 +25,19 @@ export default {
     </div>
     <!-- TODO: Add message to empty results -->
   </div>
+  <div v-else class="empty-container">
+    <h3 class="msg-empty">No record found :(</h3>
+  </div>
 </template>
+
+<style>
+.empty-container .msg-empty {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 1em;
+}
+.msg-empty {
+  font-weight: lighter;
+  color: #555;
+}
+</style>

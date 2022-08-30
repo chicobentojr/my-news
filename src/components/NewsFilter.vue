@@ -74,14 +74,17 @@ export default {
 
 <style>
 .header-filters .filter {
-  /* display: flex; */
-  /* align-items: center; */
   display: inline-block;
   cursor: pointer;
 }
 
+.header-filters .filter:hover {
+  font-weight: bold;
+}
+
 .header-filters .filter .filter-checkbox {
   margin: 0 5px;
+  accent-color: #008080;
 }
 
 .header-filters .filter .filter-label {

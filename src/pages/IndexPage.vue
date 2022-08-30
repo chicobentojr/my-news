@@ -5,19 +5,24 @@ import { RouterLink } from "vue-router";
 import Pagination from "../components/Pagination.vue";
 import Loader from "../components/Loader.vue";
 import { debounce } from "lodash";
+import NewsFilter from "../components/NewsFilter.vue";
 export default {
-  components: { NewsList, NewsModal, RouterLink, Pagination, Loader },
+  components: {
+    NewsList,
+    NewsModal,
+    RouterLink,
+    Pagination,
+    Loader,
+    NewsFilter,
+  },
   data() {
     return {
       newsSelected: null,
       allNews: [],
       filteredNews: [],
-      filters: {
-        sources: [],
-      },
+      sources: [],
       checkedSources: [],
-      // searchQuery: "Brazil",
-      searchQuery: "bitcoin",
+      searchQuery: "Brazil",
       currentPage: 1,
       totalPages: 1,
       loadingNews: true,
@@ -43,20 +48,34 @@ export default {
           //     pageSize: 10,
           //   })
           "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
-        ).then((response) => {
-          response.json().then((data) => {
-            console.log(this.searchQuery, { data });
-            this.allNews = data.articles;
-            this.filteredNews = this.allNews;
+        )
+          .then((response) => {
+            return response
+              .json()
+              .then((data) => {
+                console.log(this.searchQuery, { data });
+                this.allNews = data.articles;
+                this.filteredNews = this.allNews;
 
-            const sources = new Set(data.articles.map((a) => a.source.name));
+                const sources = new Set(
+                  data.articles.map((a) => a.source.name)
+                );
 
-            this.filters.sources = sources;
-            this.checkedSources = [];
-            this.totalPages = Math.ceil(data.totalResults / 100);
-            this.loadingNews = false;
+                this.sources = sources;
+                this.checkedSources = [];
+                this.totalPages = Math.ceil(data.totalResults / 100);
+                this.loadingNews = false;
+              })
+              .catch((error) => {
+                console.log("int", { error });
+                this.sources = [];
+                this.loadingNews = false;
+                this.filteredNews = [];
+              });
+          })
+          .catch((error) => {
+            console.log({ error });
           });
-        });
       }
     },
     handleQueryChange: debounce(function () {
@@ -73,6 +92,12 @@ export default {
       console.log({ newPage });
       this.currentPage = newPage;
       this.fetchNews();
+    },
+    handleFilterChange: function (filters) {
+      console.log({ filters });
+      this.filteredNews = this.allNews.filter(
+        (a) => filters.length == 0 || filters.includes(a.source.name)
+      );
     },
   },
   mounted() {
@@ -99,25 +124,13 @@ export default {
     </div>
     <div></div>
     <!-- TODO: Create component to manipulate filters -->
-    <div class="header-filters">
-      <strong>Source:</strong>
-      <div
-        class="filter"
-        style="margin: 0.5em"
-        v-for="source in filters.sources"
-        :key="source"
-      >
-        <input
-          class="filter-checkbox"
-          :id="source"
-          :value="source"
-          name="source"
-          type="checkbox"
-          v-model="checkedSources"
-        />
-        <label class="filter-label" :for="source">{{ source }}</label>
-      </div>
-    </div>
+    <!-- {{ filters.sources }} -->
+    <NewsFilter
+      v-if="sources.size > 0"
+      label="Source"
+      :filters="sources"
+      @onFiltersChange="handleFilterChange"
+    />
   </div>
 
   <Loader v-if="loadingNews" />
@@ -128,6 +141,7 @@ export default {
       @onClose="handleModalClose"
     />
     <Pagination
+      v-if="filteredNews.length > 0"
       :currentPage="currentPage"
       :totalPages="totalPages"
       @onPageChange="handlePageChange"
@@ -190,7 +204,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 1024px;
+  width: 80%;
 }
 
 .news-header-img {

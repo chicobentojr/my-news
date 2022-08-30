@@ -7,7 +7,7 @@ export default {
   data(props) {
     return {
       loaderStyle: {
-        backgroundColor: props.color ? props.color : "#777",
+        backgroundColor: props.color ? props.color : "#008080",
       },
     };
   },
