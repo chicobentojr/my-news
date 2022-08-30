@@ -1,6 +1,6 @@
 # my-news
 
-[![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml)
+[![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-pages-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-pages-deploy.yml)
 [![ESLint](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml)
 
 

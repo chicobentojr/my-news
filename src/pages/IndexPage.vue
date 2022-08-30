@@ -142,21 +142,6 @@ export default {
 </template>
 
 <style scoped>
-.header-filters .filter {
-  /* display: flex; */
-  /* align-items: center; */
-  display: inline-block;
-  cursor: pointer;
-}
-
-.header-filters .filter .filter-checkbox {
-  margin: 0 5px;
-}
-
-.header-filters .filter .filter-label {
-  cursor: pointer;
-}
-
 .search-bar .input {
   font-size: large;
   /* color: #008080; */
@@ -189,10 +174,5 @@ export default {
   flex-direction: column;
   margin: 0 auto;
   width: 80%;
-}
-
-.news-header-img {
-  text-align: center;
-  height: 20em;
 }
 </style>
