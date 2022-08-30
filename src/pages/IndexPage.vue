@@ -40,14 +40,14 @@ export default {
       if (this.searchQuery) {
         this.loadingNews = true;
         fetch(
-          // "https://newsapi.org/v2/everything?" +
-          //   new URLSearchParams({
-          //     q: this.searchQuery,
-          //     apiKey: import.meta.env.VITE_NEWS_API_KEY,
-          //     page: this.currentPage,
-          //     pageSize: 10,
-          //   })
-          "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
+          import.meta.env.VITE_NEWS_API_HOST +
+            "?" +
+            new URLSearchParams({
+              q: this.searchQuery,
+              apiKey: import.meta.env.VITE_NEWS_API_KEY,
+              page: this.currentPage,
+              pageSize: 100,
+            })
         ).then((response) => {
           return response
             .json()
