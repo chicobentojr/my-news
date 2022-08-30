@@ -4,11 +4,6 @@ export default {
     currentPage: Number,
     totalPages: Number,
   },
-  data() {
-    return {
-      displayPages: 5,
-    };
-  },
   computed: {
     previousPageDisabled: function () {
       return this.currentPage - 1 <= 0;
@@ -28,16 +23,18 @@ export default {
 <template>
   <div class="pagination">
     <span
-      class="page-item previous"
-      :class="{ disabled: previousPageDisabled }"
+      class="pagination__item pagination__item--previous primary--bg"
+      :class="{ 'pagination__item--disabled': previousPageDisabled }"
       @click="!previousPageDisabled && onPageClick(currentPage - 1)"
     >
       {{ "<<" }} Previous
     </span>
-    <span class="page-item"> {{ currentPage }} / {{ totalPages }} </span>
+    <span class="pagination__item primary--bg">
+      {{ currentPage }} / {{ totalPages }}
+    </span>
     <span
-      class="page-item next"
-      :class="{ disabled: nextPageDisabled }"
+      class="pagination__item pagination__item--next primary--bg"
+      :class="{ 'pagination__item--disabled': nextPageDisabled }"
       @click="!nextPageDisabled && onPageClick(currentPage + 1)"
     >
       Next {{ ">>" }}
@@ -52,10 +49,8 @@ export default {
   justify-content: space-between;
 }
 
-.page-item {
+.pagination__item {
   margin: 0 0.5em;
-
-  background: #008080;
   padding: 0.5em;
   border-radius: 5px;
   user-select: none;
@@ -63,16 +58,17 @@ export default {
   color: white;
   opacity: 0.8;
 }
-.page-item.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.page-item .previous {
+.pagination__item--previous {
   float: left;
   cursor: pointer;
 }
-.page-item .next {
+.pagination__item--next {
   float: right;
   cursor: pointer;
+}
+
+.pagination__item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

@@ -1,0 +1,15 @@
+
+.primary--color {
+    color: #008080 !important;
+}
+.primary--border {
+    border-color: #008080 !important;
+}
+
+.primary--bg {
+    background-color: #008080 !important;
+}
+
+.align-self--center {
+    align-self: center;
+}

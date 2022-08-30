@@ -66,6 +66,7 @@ export default {
               this.sources = [];
               this.loadingNews = false;
               this.filteredNews = [];
+              // TODO: Add error msg
             });
         });
       }
@@ -96,12 +97,11 @@ export default {
 </script>
 
 <template>
-  <!-- TODO: Create NewsContainer component to group children components -->
   <div class="page-header">
     <!-- TODO: Create component to search bar  -->
     <div class="search-bar" style="display: flex">
       <input
-        class="search-bar input"
+        class="search-bar input primary--color"
         style="flex: 1; padding: 1em"
         v-model="searchQuery"
         placeholder="What are you looking for?"
@@ -160,7 +160,7 @@ export default {
 
 .search-bar .input {
   font-size: large;
-  color: #008080;
+  /* color: #008080; */
   font-weight: bold;
   border: 1px solid #ccc;
   border-radius: 10px 0 0 10px;

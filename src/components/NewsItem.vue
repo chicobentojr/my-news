@@ -21,7 +21,6 @@ export default {
 
     return {
       headline,
-      // isHover: false,
     };
   },
   methods: {
@@ -38,24 +37,15 @@ export default {
 <template>
   <div
     class="news-item"
-    :class="{ favorited: isFavorite }"
+    :class="{ 'primary--border': isFavorite }"
     @click="itemSelected"
   >
-    <!-- {{ item.source.name }}: {{ item.title }} -->
-    <div class="title">
+    <div class="news-item__title primary--color">
       {{ item.source.name }}: <span v-html="headline"></span>
     </div>
-    <div class="description">
+    <div class="news-item__description">
       {{ item.description }}
     </div>
-    <!-- <div class="content">
-      {{ item.content }}
-    </div> -->
-    <!-- <Transition name="news-content">
-      <div v-if="isHover" class="content">
-        {{ item.content }}
-      </div>
-    </Transition> -->
   </div>
 </template>
 
@@ -63,44 +53,20 @@ export default {
 .news-item {
   margin: 1em;
   padding: 1em;
-  border: 1px solid #ccc;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
 }
-.news-item.favorited {
-  border-color: #008080;
-}
 .news-item:hover {
-  /* background-color: #00808050; */
   cursor: pointer;
-  /* font-weight: bold; */
   transform: scale(1.1);
 }
-.news-item .title {
+.news-item__title {
   font-size: large;
-  color: #008080;
 }
-.news-item .description {
-  /* color: #008080; */
+.news-item__description {
   margin-top: 0.5em;
-}
-
-.news-item .content {
-  margin-top: 0.5em;
-  color: #555;
-}
-.news-item .content.bold {
-  /* color: #008080; */
-  font-weight: bold;
-}
-/* Content Transition */
-.news-content-enter-active,
-.news-content-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.news-content-enter-from,
-.news-content-leave-to {
-  opacity: 0;
 }
 </style>

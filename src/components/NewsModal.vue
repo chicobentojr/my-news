@@ -39,28 +39,28 @@ export default {
 </script>
 <template>
   <Transition name="modal">
-    <div v-if="visible" class="modal-mask" @click="closeModal">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
+    <div v-if="visible" class="modal__mask" @click="closeModal">
+      <div class="modal__wrapper">
+        <div class="modal__container">
+          <div class="modal__header">
             <div>
-              <h3 class="modal-header title">{{ item.title }}</h3>
+              <h3 class="primary--color">{{ item.title }}</h3>
               <span>
                 By: <strong>{{ item.author || "Anonymous" }}</strong> at
                 <!-- TODO: Format time -->
                 {{ item.publishedAt }}
               </span>
             </div>
-            <div class="modal-actions">
+            <div class="align-self--center">
               <button
-                class="modal-header favorite-btn"
-                :class="{ favorited: isFavorite }"
+                class="header__btn"
+                :class="{ 'primary--bg': isFavorite }"
                 @click.stop="favoriteNews"
               >
                 {{ isFavorite ? "Favorited" : "Favorite" }}
               </button>
               <a
-                class="modal-header news-source-link"
+                class="modal__header news-source-link"
                 :href="item.url"
                 target="_blank"
                 >Open source ↗</a
@@ -69,12 +69,10 @@ export default {
           </div>
           <!-- TODO: Add a close button -->
           <!-- <span class="btn-close">&times;</span> -->
-          <div class="modal-body">
-            <img class="modal-header-img" :src="item.urlToImage" />
+          <div class="modal__body">
+            <img class="modal__header-img" :src="item.urlToImage" />
             <PageRenderer :item="item" />
           </div>
-
-          <div class="modal-footer"></div>
         </div>
       </div>
     </div>
@@ -82,7 +80,7 @@ export default {
 </template>
 
 <style>
-.modal-mask {
+.modal__mask {
   position: fixed;
   z-index: 100;
   top: 0;
@@ -94,12 +92,12 @@ export default {
   transition: opacity 0.1s ease;
 }
 
-.modal-wrapper {
+.modal__wrapper {
   display: table-cell;
   vertical-align: middle;
 }
 
-.modal-container {
+.modal__container {
   max-width: 960px;
   z-index: 9999;
   margin: 0 auto;
@@ -112,18 +110,13 @@ export default {
   overflow-y: auto;
 }
 
-.modal-header {
+.modal__header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.modal-header .modal-actions {
-  align-self: center;
-}
-
-.modal-header .favorite-btn {
-  color: #008080;
+.header__btn {
   float: right;
   align-self: flex-end;
   margin: 0 0.5em;
@@ -135,49 +128,34 @@ export default {
   cursor: pointer;
 }
 
-.modal-header .favorite-btn.favorited {
-  background-color: #008080;
-}
-
-.modal-header .news-source-link {
+.modal__header .news-source-link {
   color: #008080;
   float: right;
   align-self: flex-end;
   padding: 0.5em 1em;
 }
-.modal-header .title {
-  margin: 1em 0;
-  /* color: #42b983; */
-  color: #008080;
-}
 
-.modal-header-img {
+.modal__header-img {
   text-align: center;
   width: 100%;
   margin: 1em auto;
 }
 
-.modal-body {
+.modal__body {
   margin: 20px 0;
   display: flex;
   flex-direction: column;
-}
-
-.modal-default-button {
-  float: right;
 }
 
 /* Transition: modal*/
 .modal-enter-from {
   opacity: 0;
 }
-
 .modal-leave-to {
   opacity: 0;
 }
-
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
+.modal-enter-from .modal__container,
+.modal-leave-to .modal__container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }

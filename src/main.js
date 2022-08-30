@@ -1,3 +1,5 @@
+import "./assets/base.css";
+
 import * as Vue from "vue";
 
 import App from "./App.vue";

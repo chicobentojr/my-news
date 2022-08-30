@@ -31,50 +31,49 @@ export default {
   },
   props: {
     label: String,
-    filters: [String],
+    filters: Set,
   },
   components: { NewsList, NewsModal },
 };
 </script>
 
 <template>
-  <div class="header-filters" v-if="filters">
+  <div v-if="filters">
     <strong>{{ label }}:</strong>
     <div
-      class="filter"
+      class="header__filter"
       style="margin: 0.5em"
       v-for="source in filters"
       :key="source"
     >
       <input
-        class="filter-checkbox"
+        class="filter__checkbox"
         :id="source"
         :value="source"
         name="source"
         type="checkbox"
         v-model="checkedFilters"
       />
-      <label class="filter-label" :for="source">{{ source }}</label>
+      <label class="filter__label" :for="source">{{ source }}</label>
     </div>
   </div>
 </template>
 
-<style>
-.header-filters .filter {
+<style scoped>
+.header__filter {
   display: inline-block;
   cursor: pointer;
 }
-
-.header-filters .filter:hover {
+.header__filter:hover {
   font-weight: bold;
 }
 
-.header-filters .filter .filter-checkbox {
+.filter__checkbox {
   margin: 0 5px;
   accent-color: #008080;
 }
 
-.header-filters .filter .filter-label {
+.filter__label {
   cursor: pointer;
 }
 </style>

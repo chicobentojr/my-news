@@ -24,17 +24,17 @@ export default {
     </div>
   </div>
   <div v-else class="empty-container">
-    <h3 class="msg-empty">No record found :(</h3>
+    <h3 class="empty-container__msg">No record found :(</h3>
   </div>
 </template>
 
 <style>
-.empty-container .msg-empty {
+.empty-container {
   border: 1px solid #ccc;
   text-align: center;
   padding: 1em;
 }
-.msg-empty {
+.empty-container__msg {
   font-weight: lighter;
   color: #555;
 }
