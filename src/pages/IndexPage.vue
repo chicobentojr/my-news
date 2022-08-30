@@ -2,11 +2,11 @@
 import NewsList from "../components/NewsList.vue";
 import NewsModal from "../components/NewsModal.vue";
 import Loader from "../components/LoaderItem.vue";
-import { debounce } from "lodash";
 import NewsFilter from "../components/NewsFilter.vue";
 import PaginationBar from "../components/PaginationBar.vue";
 import { NEWS_API_HOST, NEWS_API_KEY } from "../utils/constants";
 import InfoMessage from "../components/InfoMessage.vue";
+import SearchBar from "../components/SearchBar.vue";
 export default {
   components: {
     NewsList,
@@ -15,6 +15,7 @@ export default {
     NewsFilter,
     PaginationBar,
     InfoMessage,
+    SearchBar,
   },
   setup() {
     return {
@@ -33,6 +34,7 @@ export default {
       totalPages: 1,
       loadingNews: true,
       serverError: null,
+      pageSize: 10,
     };
   },
   watch: {
@@ -53,7 +55,7 @@ export default {
               q: this.searchQuery,
               apiKey: NEWS_API_KEY,
               page: this.currentPage,
-              pageSize: 100,
+              pageSize: this.pageSize,
             })
         )
           .then((response) => {
@@ -73,7 +75,7 @@ export default {
 
                 this.sources = sources;
                 this.checkedSources = [];
-                this.totalPages = Math.ceil(data.totalResults / 100);
+                this.totalPages = Math.ceil(data.totalResults / this.pageSize);
                 this.loadingNews = false;
               })
               .catch((error) => {
@@ -88,9 +90,11 @@ export default {
           });
       }
     },
-    handleQueryChange: debounce(function () {
+    handleQuerySearch: function (query) {
+      this.searchQuery = query;
+      this.currentPage = 1;
       this.fetchNews();
-    }, 500),
+    },
     handleModalClose: function () {
       this.newsSelected = null;
     },
@@ -121,18 +125,7 @@ export default {
       Open https://github.com/chicobentojr/my-news to run project locally."
       type="warning"
     />
-    <!-- TODO: Create component to search bar  -->
-    <div class="search-bar" style="display: flex">
-      <input
-        class="search-bar input primary--color"
-        style="flex: 1; padding: 1em"
-        v-model="searchQuery"
-        placeholder="What are you looking for?"
-        @input="handleQueryChange"
-      />
-      <button class="search-bar btn-search" @click="fetchNews">Search</button>
-    </div>
-    <div></div>
+    <SearchBar @onQuerySearch="handleQuerySearch" />
     <NewsFilter
       v-if="sources.size > 0"
       label="Source"
@@ -168,33 +161,6 @@ export default {
 </template>
 
 <style scoped>
-.search-bar .input {
-  font-size: large;
-  /* color: #008080; */
-  font-weight: bold;
-  border: 1px solid #ccc;
-  border-radius: 10px 0 0 10px;
-}
-.search-bar .input:focus {
-  outline: none;
-  border: 1px solid #008080;
-}
-
-.search-bar .btn-search {
-  font-size: large;
-  outline: none;
-  border: none;
-  color: white;
-  background-color: #008080;
-  padding: 0 1em;
-  border-radius: 0px 10px 10px 0px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-.search-bar .btn-search:hover {
-  opacity: 1;
-}
-
 .news-content {
   display: flex;
   flex-direction: column;
