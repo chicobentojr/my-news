@@ -19,14 +19,7 @@ export default {
   },
   methods: {
     onPageClick(pg) {
-      //   this.currentPage = Math.max(Math.min(pg, this.totalPages), 1);
       this.$emit("onPageChange", pg);
-
-      //   const pages = [...Array(this.displayPages).keys()].map(
-      //     (p) => p + this.currentPage
-      //   );
-      //   console.log(pages);
-      //   this.pages = pages;
     },
   },
 };
@@ -42,11 +35,6 @@ export default {
       {{ "<<" }} Previous
     </span>
     <span class="page-item"> {{ currentPage }} / {{ totalPages }} </span>
-    <!-- {{ pg + 1 }} -->
-    <!-- <a v-for="pg in pages" :key="pg" class="page-item" @click="onPageClick(pg)">
-      {{ currentPage }}
-    </a> -->
-
     <span
       class="page-item next"
       :class="{ disabled: nextPageDisabled }"

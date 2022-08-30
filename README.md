@@ -1,12 +1,7 @@
 # my-news
 
-<p align="center">
-
 [![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml)
-
 [![ESLint](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml)
-
-</p>
 
 
 This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-start.html#with-build-tools) Quick Start template.

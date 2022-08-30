@@ -24,18 +24,12 @@ export default {
       // isHover: false,
     };
   },
-  mounted() {},
   methods: {
     itemSelected: function () {
       this.$emit("onItemSelected", this.item);
     },
-    // onItemHover: function (enter) {
-    //   this.isHover = enter;
-    // console.log("hove", enter, this.item);
-    // },
   },
   props: {
-    // TODO: Define item structure
     item: Object,
     query: String,
   },

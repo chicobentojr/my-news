@@ -7,21 +7,12 @@ import NewsFilter from "../components/NewsFilter.vue";
 export default {
   setup() {
     const store = useStore();
-    const items = computed(function () {
-      return store.state.favoriteNews;
-    });
+    const items = computed(() => store.state.favoriteNews);
+    const filters = computed(
+      () => new Set(store.state.favoriteNews.map((n) => n.source.name))
+    );
 
-    const filters = computed(function () {
-      const a = new Set(store.state.favoriteNews.map((n) => n.source.name));
-      console.log({ a });
-      return a;
-    });
-    console.log({ ...items });
-    console.log("favitems", store.state.favoriteNews);
-    return {
-      items,
-      filters,
-    };
+    return { items, filters };
   },
   data() {
     return {
@@ -32,14 +23,12 @@ export default {
   },
   methods: {
     handleNewsSelected: function (item) {
-      console.log("fav", { ...item });
       this.newsSelected = item;
     },
     handleModalClose: function () {
       this.newsSelected = null;
     },
     handleFilterChange: function (filters) {
-      console.log({ filters });
       this.filteredNews = this.items.filter(
         (a) => filters.length == 0 || filters.includes(a.source.name)
       );
@@ -50,7 +39,6 @@ export default {
 </script>
 
 <template>
-  <!-- <div>Favorite News</div> -->
   <NewsFilter
     v-if="filteredNews.length > 0"
     label="Source"

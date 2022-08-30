@@ -48,34 +48,26 @@ export default {
           //     pageSize: 10,
           //   })
           "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
-        )
-          .then((response) => {
-            return response
-              .json()
-              .then((data) => {
-                console.log(this.searchQuery, { data });
-                this.allNews = data.articles;
-                this.filteredNews = this.allNews;
+        ).then((response) => {
+          return response
+            .json()
+            .then((data) => {
+              this.allNews = data.articles;
+              this.filteredNews = this.allNews;
 
-                const sources = new Set(
-                  data.articles.map((a) => a.source.name)
-                );
+              const sources = new Set(data.articles.map((a) => a.source.name));
 
-                this.sources = sources;
-                this.checkedSources = [];
-                this.totalPages = Math.ceil(data.totalResults / 100);
-                this.loadingNews = false;
-              })
-              .catch((error) => {
-                console.log("int", { error });
-                this.sources = [];
-                this.loadingNews = false;
-                this.filteredNews = [];
-              });
-          })
-          .catch((error) => {
-            console.log({ error });
-          });
+              this.sources = sources;
+              this.checkedSources = [];
+              this.totalPages = Math.ceil(data.totalResults / 100);
+              this.loadingNews = false;
+            })
+            .catch((error) => {
+              this.sources = [];
+              this.loadingNews = false;
+              this.filteredNews = [];
+            });
+        });
       }
     },
     handleQueryChange: debounce(function () {
@@ -85,24 +77,19 @@ export default {
       this.newsSelected = null;
     },
     handleNewsSelected: function (item) {
-      // console.log("app", { ...item });
       this.newsSelected = item;
     },
     handlePageChange: function (newPage) {
-      console.log({ newPage });
       this.currentPage = newPage;
       this.fetchNews();
     },
     handleFilterChange: function (filters) {
-      console.log({ filters });
       this.filteredNews = this.allNews.filter(
         (a) => filters.length == 0 || filters.includes(a.source.name)
       );
     },
   },
   mounted() {
-    // TODO: Set API host as Env variable
-    // console.log(this.$router.params);
     this.fetchNews();
   },
 };
@@ -123,8 +110,6 @@ export default {
       <button class="search-bar btn-search" @click="fetchNews">Search</button>
     </div>
     <div></div>
-    <!-- TODO: Create component to manipulate filters -->
-    <!-- {{ filters.sources }} -->
     <NewsFilter
       v-if="sources.size > 0"
       label="Source"

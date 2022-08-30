@@ -27,7 +27,6 @@ export default {
 
   methods: {
     closeModal: function () {
-      console.log("fecha");
       this.$emit("onClose");
     },
   },
@@ -154,8 +153,6 @@ export default {
 
 .modal-header-img {
   text-align: center;
-  /* max-width: 900px;
-  max-width: -webkit-fill-available; */
   width: 100%;
   margin: 1em auto;
 }
@@ -170,15 +167,7 @@ export default {
   float: right;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
+/* Transition: modal*/
 .modal-enter-from {
   opacity: 0;
 }

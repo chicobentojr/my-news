@@ -3,7 +3,6 @@ import NewsItem from "./NewsItem.vue";
 export default {
   methods: {
     handleItemSelected: function (item) {
-      console.log("on item");
       this.$emit("onNewsSelected", item);
     },
   },
@@ -23,7 +22,6 @@ export default {
         @onItemSelected="handleItemSelected"
       />
     </div>
-    <!-- TODO: Add message to empty results -->
   </div>
   <div v-else class="empty-container">
     <h3 class="msg-empty">No record found :(</h3>

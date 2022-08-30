@@ -22,7 +22,6 @@ const count = computed(function () {
   </main>
 </template>
 
-<!-- TODO: Refactor entire style page -->
 <style>
 html {
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;

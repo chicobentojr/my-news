@@ -6,15 +6,8 @@ import NewsModal from "../components/NewsModal.vue";
 export default {
   setup() {
     const store = useStore();
-    const items = computed(function () {
-      return store.state.favoriteNews;
-    });
-    console.log({ ...items });
-    console.log("favitems", store.state.favoriteNews);
-    return {
-      items,
-      //   filters: new Set(items.map((n) => n.source.name)),
-    };
+    const items = computed(() => store.state.favoriteNews);
+    return { items };
   },
   data() {
     return {
@@ -25,16 +18,11 @@ export default {
   },
   watch: {
     checkedFilters(newValues) {
-      //   this.filteredNews = this.allNews.filter(
-      //     (a) => newValues.length == 0 || newValues.includes(a.source.name)
-      //   );
-      console.log({ newValues });
       this.$emit("onFiltersChange", newValues);
     },
   },
   methods: {
     handleNewsSelected: function (item) {
-      console.log("fav", { ...item });
       this.newsSelected = item;
     },
     handleModalClose: function () {
@@ -51,7 +39,6 @@ export default {
 
 <template>
   <div class="header-filters" v-if="filters">
-    <!-- {{ filters }} -->
     <strong>{{ label }}:</strong>
     <div
       class="filter"
