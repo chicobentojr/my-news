@@ -43,6 +43,10 @@ export default {
     <div class="news-item__title primary--color">
       {{ item.source.name }}: <span v-html="headline"></span>
     </div>
+    <div class="news-item__date">
+      Published at: {{ new Date(item.publishedAt).toLocaleDateString("en-US") }}
+    </div>
+
     <div class="news-item__description">
       {{ item.description }}
     </div>
@@ -65,6 +69,9 @@ export default {
 }
 .news-item__title {
   font-size: large;
+}
+.news-item__date {
+  color: #555;
 }
 .news-item__description {
   margin-top: 0.5em;

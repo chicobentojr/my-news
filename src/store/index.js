@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 
-// TODO: Create constants to mutations
 const store = createStore({
   state: {
     favoriteNews: [],

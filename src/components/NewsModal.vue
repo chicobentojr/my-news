@@ -47,8 +47,7 @@ export default {
               <h3 class="primary--color">{{ item.title }}</h3>
               <span>
                 By: <strong>{{ item.author || "Anonymous" }}</strong> at
-                <!-- TODO: Format time -->
-                {{ item.publishedAt }}
+                {{ new Date(item.publishedAt).toLocaleDateString("en-US") }}
               </span>
             </div>
             <div class="align-self--center">
@@ -67,8 +66,6 @@ export default {
               >
             </div>
           </div>
-          <!-- TODO: Add a close button -->
-          <!-- <span class="btn-close">&times;</span> -->
           <div class="modal__body">
             <img class="modal__header-img" :src="item.urlToImage" />
             <PageRenderer :item="item" />
