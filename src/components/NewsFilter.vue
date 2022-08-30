@@ -1,8 +1,6 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import NewsList from "../components/NewsList.vue";
-import NewsModal from "../components/NewsModal.vue";
 export default {
   setup() {
     const store = useStore();
@@ -33,7 +31,6 @@ export default {
     label: String,
     filters: Set,
   },
-  components: { NewsList, NewsModal },
 };
 </script>
 

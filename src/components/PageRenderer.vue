@@ -2,12 +2,12 @@
 import { Readability } from "@mozilla/readability";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import Loader from "./Loader.vue";
+import Loader from "./LoaderItem.vue";
 export default {
   setup(props) {
     const store = useStore();
     const cachedArticle = computed(function () {
-      if (!store.state.cachedNews.hasOwnProperty(props.item.url)) return null;
+      if (!(props.item.url in store.state.cachedNews)) return null;
 
       return store.state.cachedNews[props.item.url];
     });

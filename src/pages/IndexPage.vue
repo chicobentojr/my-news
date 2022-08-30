@@ -1,19 +1,17 @@
 <script>
 import NewsList from "../components/NewsList.vue";
 import NewsModal from "../components/NewsModal.vue";
-import { RouterLink } from "vue-router";
-import Pagination from "../components/Pagination.vue";
-import Loader from "../components/Loader.vue";
+import Loader from "../components/LoaderItem.vue";
 import { debounce } from "lodash";
 import NewsFilter from "../components/NewsFilter.vue";
+import PaginationBar from "../components/PaginationBar.vue";
 export default {
   components: {
     NewsList,
     NewsModal,
-    RouterLink,
-    Pagination,
     Loader,
     NewsFilter,
+    PaginationBar,
   },
   data() {
     return {
@@ -67,6 +65,7 @@ export default {
               this.loadingNews = false;
               this.filteredNews = [];
               // TODO: Add error msg
+              console.error(error);
             });
         });
       }
@@ -125,7 +124,7 @@ export default {
       :item="newsSelected"
       @onClose="handleModalClose"
     />
-    <Pagination
+    <PaginationBar
       v-if="filteredNews.length > 0"
       :currentPage="currentPage"
       :totalPages="totalPages"
