@@ -19,8 +19,12 @@ This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-star
     # VITE_NEWS_API_KEY=<YOUR_NEWS_API_KEY>
     ``` 
 
+## Install packages
 
-## Project Setup with docker
+```sh
+npm install
+```
+## Running project with docker
 
 Start docker-compose containers
 
@@ -29,17 +33,15 @@ docker-compose up
 ```
 
 Open http://localhost:4000 
-## Project Setup with npm
+## Running project with npm
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
+Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
+
+Open http://localhost:4000 
 
 ### Compile and Minify for Production
 
@@ -51,4 +53,10 @@ npm run build
 
 ```sh
 npm run lint
+```
+
+### Testing with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
 ```
