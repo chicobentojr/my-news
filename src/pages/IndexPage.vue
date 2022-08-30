@@ -46,28 +46,34 @@ export default {
               page: this.currentPage,
               pageSize: 100,
             })
-        ).then((response) => {
-          return response
-            .json()
-            .then((data) => {
-              this.allNews = data.articles;
-              this.filteredNews = this.allNews;
+        )
+          .then((response) => {
+            return response
+              .json()
+              .then((data) => {
+                this.allNews = data.articles;
+                this.filteredNews = this.allNews;
 
-              const sources = new Set(data.articles.map((a) => a.source.name));
+                const sources = new Set(
+                  data.articles.map((a) => a.source.name)
+                );
 
-              this.sources = sources;
-              this.checkedSources = [];
-              this.totalPages = Math.ceil(data.totalResults / 100);
-              this.loadingNews = false;
-            })
-            .catch((error) => {
-              this.sources = [];
-              this.loadingNews = false;
-              this.filteredNews = [];
-              // TODO: Add error msg
-              console.error(error);
-            });
-        });
+                this.sources = sources;
+                this.checkedSources = [];
+                this.totalPages = Math.ceil(data.totalResults / 100);
+                this.loadingNews = false;
+              })
+              .catch((error) => {
+                this.sources = [];
+                this.loadingNews = false;
+                this.filteredNews = [];
+                // TODO: Add error msg
+                console.error(error);
+              });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }
     },
     handleQueryChange: debounce(function () {
