@@ -1,20 +1,32 @@
 <script>
+import { computed } from "vue";
 import { useStore } from "vuex";
 import PageRenderer from "./PageRenderer.vue";
 export default {
   setup(props) {
     const store = useStore();
+
+    const isFavorite = computed(function () {
+      return Boolean(
+        store.state.favoriteNews.find((n) => n.url == props.item.url)
+      );
+    });
+
     const favoriteNews = function () {
-      console.log("favoritar", props.item);
-      store.commit("addFavoriteNews", props.item);
+      if (this.isFavorite) {
+        store.commit("removeFavoriteNews", props.item);
+      } else {
+        store.commit("addFavoriteNews", props.item);
+      }
     };
     return {
       favoriteNews,
+      isFavorite,
     };
   },
+
   methods: {
     closeModal: function () {
-      console.log("fecha");
       this.$emit("onClose");
     },
   },
@@ -27,33 +39,39 @@ export default {
 </script>
 <template>
   <Transition name="modal">
-    <div v-if="visible" class="modal-mask" @click="closeModal">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <img class="news-header-img" :src="item.urlToImage" />
-            <h3>{{ item.title }}</h3>
+    <div v-if="visible" class="modal__mask" @click="closeModal">
+      <div class="modal__wrapper">
+        <div class="modal__container">
+          <div class="modal__header">
+            <div>
+              <h3 class="primary--color">{{ item.title }}</h3>
+              <span>
+                By: <strong>{{ item.author || "Anonymous" }}</strong> at
+                <!-- TODO: Format time -->
+                {{ item.publishedAt }}
+              </span>
+            </div>
+            <div class="align-self--center">
+              <button
+                class="header__btn"
+                :class="{ 'primary--bg': isFavorite }"
+                @click.stop="favoriteNews"
+              >
+                {{ isFavorite ? "Favorited" : "Favorite" }}
+              </button>
+              <a
+                class="modal__header news-source-link"
+                :href="item.url"
+                target="_blank"
+                >Open source ↗</a
+              >
+            </div>
           </div>
           <!-- TODO: Add a close button -->
           <!-- <span class="btn-close">&times;</span> -->
-          <div class="modal-content">
-            <p>
-              By: <strong>{{ item.author }}</strong> at
-              {{ item.publishedAt }}
-            </p>
-
-            <a :href="item.url" target="_blank">Open news</a>
-
-            <!-- <p>{{ item.description }}</p> -->
-
-            <!-- <p>{{ item.content }}</p> -->
-            <!-- TODO: Add iframe to display entire report??? -->
-          </div>
-
-          <button @click.stop="favoriteNews">Favorite</button>
-          <div class="modal-footer"></div>
-          <div>
-            <PageRenderer :url="item.url" />
+          <div class="modal__body">
+            <img class="modal__header-img" :src="item.urlToImage" />
+            <PageRenderer :item="item" />
           </div>
         </div>
       </div>
@@ -62,7 +80,7 @@ export default {
 </template>
 
 <style>
-.modal-mask {
+.modal__mask {
   position: fixed;
   z-index: 100;
   top: 0;
@@ -74,12 +92,12 @@ export default {
   transition: opacity 0.1s ease;
 }
 
-.modal-wrapper {
+.modal__wrapper {
   display: table-cell;
   vertical-align: middle;
 }
 
-.modal-container {
+.modal__container {
   max-width: 960px;
   z-index: 9999;
   margin: 0 auto;
@@ -92,44 +110,52 @@ export default {
   overflow-y: auto;
 }
 
-.modal-header h3 {
-  margin: 1em 0;
-  color: #42b983;
+.modal__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
+.header__btn {
   float: right;
+  align-self: flex-end;
+  margin: 0 0.5em;
+  background-color: #ccc;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.news-header-img {
+.modal__header .news-source-link {
+  color: #008080;
+  float: right;
+  align-self: flex-end;
+  padding: 0.5em 1em;
+}
+
+.modal__header-img {
   text-align: center;
-  max-width: 900px;
-  margin: 0.5em auto;
+  width: 100%;
+  margin: 1em auto;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
+.modal__body {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
 
+/* Transition: modal*/
 .modal-enter-from {
   opacity: 0;
 }
-
 .modal-leave-to {
   opacity: 0;
 }
-
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
+.modal-enter-from .modal__container,
+.modal-leave-to .modal__container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }

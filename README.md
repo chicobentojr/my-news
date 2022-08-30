@@ -1,16 +1,34 @@
 # my-news
 
-This template should help get you started developing with Vue 3 in Vite.
+[![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml)
+[![ESLint](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml)
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-start.html#with-build-tools) Quick Start template.
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## News API Setup
 
-## Project Setup
+- Open [News API](https://newsapi.org/docs) and get a Development API Key to run locally.
+  - Create a env file and set your API Key
+    ```sh
+    cp .env.example .env
+
+    # .env
+    # VITE_NEWS_API_KEY=<YOUR_NEWS_API_KEY>
+    ``` 
+
+
+## Project Setup with docker
+
+Start docker-compose containers
+
+```sh
+docker-compose up
+```
+
+Open http://localhost:4000 
+## Project Setup with npm
 
 ```sh
 npm install

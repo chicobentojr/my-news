@@ -2,74 +2,46 @@
 import { Readability } from "@mozilla/readability";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import Loader from "./Loader.vue";
+import Loader from "./LoaderItem.vue";
 export default {
   setup(props) {
     const store = useStore();
-    // console.log("state", { ...store.state });
     const cachedArticle = computed(function () {
-      return store.state.cachedNews.hasOwnProperty(props.url)
-        ? store.state.cachedNews[props.url]
-        : null;
+      if (!(props.item.url in store.state.cachedNews)) return null;
+
+      return store.state.cachedNews[props.item.url];
     });
-    // console.log({ cachedArticle });
     const addNewsToCache = function (article) {
-      console.log("addNewsToCache", { url: props.url, article });
       store.commit("addNewsToCache", {
-        key: props.url,
+        key: props.item.url,
         content: article,
       });
     };
-    // const cachedArticle = function () {
     return {
       cachedArticle,
       addNewsToCache,
     };
   },
-  // computed: {
-  //   cachedArticle() {
-  //     const store = useStore();
-  //     return store.state.cachedNews.hasOwnProperty(this.url)
-  //       ? store.state.cachedNews[this.url]
-  //       : null;
-  //   },
-  // },
-  // data() {
-  //   return {
-  //     newsContent: "",
-  //   };
-  // },
   mounted() {
-    // console.log("render", this.url);
     if (!this.cachedArticle) {
-      console.log("fazer o fetch");
-      fetch(this.url).then((response) => {
-        // console.log(response);
+      fetch(this.item.url).then((response) => {
         response.text().then((text) => {
           var parser = new DOMParser();
           var doc = parser.parseFromString(text, "text/html");
-          // console.log({ doc });
           var article = new Readability(doc).parse();
-          // console.log({ article });
-          // this.newsContent = article.textContent;
           this.addNewsToCache(article.textContent);
         });
       });
-    } else {
-      console.log("bateu no cache");
     }
   },
   props: {
-    url: String,
+    item: Object,
   },
   components: { Loader },
 };
 </script>
 <template>
-  <div v-if="!cachedArticle">
-    <Loader />
-  </div>
-
+  <Loader v-if="!cachedArticle" />
   <div v-if="cachedArticle">
     {{ cachedArticle }}
   </div>

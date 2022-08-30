@@ -9,33 +9,35 @@ const count = computed(function () {
 </script>
 
 <template>
-  <!-- TODO: Create app header component -->
-  <header>
-    <RouterLink to="/"><h3>My News</h3></RouterLink> |
-    <RouterLink to="/favorites"
-      ><h3>Favorites {{ count ? `(${count})` : null }}</h3></RouterLink
-    >
+  <header class="header">
+    <RouterLink to="/" class="header__link">
+      <h3>My News</h3>
+    </RouterLink>
+    |
+    <RouterLink to="/favorites" class="header__link">
+      <h3>Favorites {{ count ? `(${count})` : null }}</h3>
+    </RouterLink>
   </header>
 
-  <main>
+  <main class="main">
     <RouterView />
   </main>
 </template>
 
-<!-- TODO: Refactor entire style page -->
 <style>
-* {
-  font-size: 1.02em;
+html {
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-header {
+.header {
   margin: 1em auto;
   max-width: 1260px;
 }
-header > a {
+.header__link {
   display: inline-block;
+  color: #008080;
 }
 
-main {
+.main {
   max-width: 1260px;
   margin: 0 auto;
   display: flex;
