@@ -34,7 +34,7 @@ export default {
       totalPages: 1,
       loadingNews: true,
       serverError: null,
-      pageSize: 10,
+      pageSize: 100,
     };
   },
   watch: {
