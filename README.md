@@ -1,5 +1,14 @@
 # my-news
 
+<p align="center">
+
+[![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-page-deploy.yml)
+
+[![ESLint](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml)
+
+</p>
+
+
 This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-start.html#with-build-tools) Quick Start template.
 
 
@@ -23,18 +32,8 @@ Start docker-compose containers
 docker-compose up
 ```
 
-<!-- If you are using docker [start here](#get-a-dataset). -->
-<!-- This template should help get you started developing with Vue 3 in Vite. -->
-<!-- ## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-See [Vite Configuration Reference](https://vitejs.dev/config/). -->
-
+Open http://localhost:4000 
 ## Project Setup with npm
-
-
 
 ```sh
 npm install
