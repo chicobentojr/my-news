@@ -1,6 +1,7 @@
 # my-news
 
 [![Build and Deploy](https://github.com/chicobentojr/my-news/actions/workflows/gh-pages-deploy.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/gh-pages-deploy.yml)
+[![testing](https://github.com/chicobentojr/my-news/actions/workflows/testing.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/testing.yml)
 [![ESLint](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml/badge.svg)](https://github.com/chicobentojr/my-news/actions/workflows/lint.yml)
 
 
