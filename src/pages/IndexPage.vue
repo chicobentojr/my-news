@@ -5,6 +5,8 @@ import Loader from "../components/LoaderItem.vue";
 import { debounce } from "lodash";
 import NewsFilter from "../components/NewsFilter.vue";
 import PaginationBar from "../components/PaginationBar.vue";
+import { NEWS_API_HOST, NEWS_API_KEY } from "../utils/constants";
+import InfoMessage from "../components/InfoMessage.vue";
 export default {
   components: {
     NewsList,
@@ -12,6 +14,12 @@ export default {
     Loader,
     NewsFilter,
     PaginationBar,
+    InfoMessage,
+  },
+  setup() {
+    return {
+      isDemoApi: !NEWS_API_HOST.includes("newsapi.org"),
+    };
   },
   data() {
     return {
@@ -24,6 +32,7 @@ export default {
       currentPage: 1,
       totalPages: 1,
       loadingNews: true,
+      serverError: null,
     };
   },
   watch: {
@@ -38,11 +47,11 @@ export default {
       if (this.searchQuery) {
         this.loadingNews = true;
         fetch(
-          import.meta.env.VITE_NEWS_API_HOST +
+          NEWS_API_HOST +
             "?" +
             new URLSearchParams({
               q: this.searchQuery,
-              apiKey: import.meta.env.VITE_NEWS_API_KEY,
+              apiKey: NEWS_API_KEY,
               page: this.currentPage,
               pageSize: 100,
             })
@@ -51,6 +60,10 @@ export default {
             return response
               .json()
               .then((data) => {
+                if (data.status == "error") {
+                  throw data;
+                }
+
                 this.allNews = data.articles;
                 this.filteredNews = this.allNews;
 
@@ -67,8 +80,7 @@ export default {
                 this.sources = [];
                 this.loadingNews = false;
                 this.filteredNews = [];
-                // TODO: Add error msg
-                console.error(error);
+                this.serverError = error.message;
               });
           })
           .catch((error) => {
@@ -103,6 +115,12 @@ export default {
 
 <template>
   <div class="page-header">
+    <InfoMessage
+      v-if="isDemoApi"
+      message="This interface is not using original News API due free plan limitations. So all results are the same. 
+      Open https://github.com/chicobentojr/my-news to run project locally."
+      type="warning"
+    />
     <!-- TODO: Create component to search bar  -->
     <div class="search-bar" style="display: flex">
       <input
@@ -136,6 +154,8 @@ export default {
       :totalPages="totalPages"
       @onPageChange="handlePageChange"
     />
+    <InfoMessage v-if="serverError" :message="serverError" type="error" />
+
     <div>
       <NewsList
         style="flex: 1"
