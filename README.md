@@ -9,6 +9,13 @@ This project was created based on [Vue3/Vite](https://vuejs.org/guide/quick-star
 
 ## Live Demo
 
+### Disclaimer
+
+```sh
+# Since News API is not free to custom domains
+# it is used other custom API that simulate News API entities in GitHub demo.
+```
+
 - Install [CORS Unblock](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino) to fetch the news.
 - Open [demo here](https://chicobento.dev/my-news/)
 
