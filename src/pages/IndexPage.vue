@@ -2,8 +2,11 @@
 import NewsList from "../components/NewsList.vue";
 import NewsModal from "../components/NewsModal.vue";
 import { RouterLink } from "vue-router";
+import Pagination from "../components/Pagination.vue";
+import Loader from "../components/Loader.vue";
+import { debounce } from "lodash";
 export default {
-  components: { NewsList, NewsModal, RouterLink },
+  components: { NewsList, NewsModal, RouterLink, Pagination, Loader },
   data() {
     return {
       newsSelected: null,
@@ -13,7 +16,11 @@ export default {
         sources: [],
       },
       checkedSources: [],
+      // searchQuery: "Brazil",
       searchQuery: "bitcoin",
+      currentPage: 1,
+      totalPages: 1,
+      loadingNews: true,
     };
   },
   watch: {
@@ -24,26 +31,20 @@ export default {
     },
   },
   methods: {
-    handleModalClose: function () {
-      this.newsSelected = null;
-    },
-    handleNewsSelected: function (item) {
-      // console.log("app", { ...item });
-      this.newsSelected = item;
-    },
     fetchNews: function () {
       if (this.searchQuery) {
-        // console.log("fetching ....", this.searchQuery);
-
+        this.loadingNews = true;
         fetch(
           "https://newsapi.org/v2/everything?" +
             new URLSearchParams({
               q: this.searchQuery,
               apiKey: import.meta.env.VITE_NEWS_API_KEY,
+              page: this.currentPage,
+              pageSize: 15,
             })
         ).then((response) => {
           response.json().then((data) => {
-            // console.log({ data });
+            console.log(this.searchQuery, { data });
             this.allNews = data.articles;
             this.filteredNews = this.allNews;
 
@@ -51,9 +52,26 @@ export default {
 
             this.filters.sources = sources;
             this.checkedSources = [];
+            this.totalPages = Math.ceil(data.totalResults / 100);
+            this.loadingNews = false;
           });
         });
       }
+    },
+    handleQueryChange: debounce(function () {
+      this.fetchNews();
+    }, 500),
+    handleModalClose: function () {
+      this.newsSelected = null;
+    },
+    handleNewsSelected: function (item) {
+      // console.log("app", { ...item });
+      this.newsSelected = item;
+    },
+    handlePageChange: function (newPage) {
+      console.log({ newPage });
+      this.currentPage = newPage;
+      this.fetchNews();
     },
   },
   mounted() {
@@ -73,6 +91,7 @@ export default {
         style="flex: 1; padding: 1em"
         v-model="searchQuery"
         placeholder="What are you looking for?"
+        @input="handleQueryChange"
       />
       <button @click="fetchNews">Search</button>
     </div>
@@ -99,36 +118,25 @@ export default {
     </div>
   </div>
 
-  <div class="news-content">
+  <Loader v-if="loadingNews" />
+  <div v-else class="news-content">
     <NewsModal
       :visible="newsSelected != null"
       :item="newsSelected"
       @onClose="handleModalClose"
+    />
+    <Pagination
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @onPageChange="handlePageChange"
     />
     <div>
       <NewsList
         style="flex: 1"
         @onNewsSelected="handleNewsSelected"
         :items="filteredNews"
+        :query="searchQuery"
       />
-
-      <!-- TODO: Create component to display selected news -->
-      <!-- <div v-if="newsSelected" style="flex: 1">
-          <div style="background: #ccc; margin: 1em">
-            <img class="news-header-img" :src="newsSelected.urlToImage" />
-            <h3>{{ newsSelected.title }}</h3>
-            <p>
-              By: <strong>{{ newsSelected.author }}</strong> at
-              {{ newsSelected.publishedAt }}
-            </p>
-  
-            <p>{{ newsSelected.description }}</p>
-  
-            <p>{{ newsSelected.content }}</p>
-  
-            <PageRenderer :url="newsSelected.url" />
-          </div>
-        </div> -->
     </div>
   </div>
 </template>
@@ -160,6 +168,7 @@ export default {
 
 .news-content {
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: 1024px;
 }
